@@ -1,0 +1,49 @@
+Goal: Fingerprint ICS/SCADA assets, analyze traffic, and produce a Purdue model network map.
+Outcome: network diagram + summary report
+
+Step 0: Preparation
+i) Download free ICS PCAP datasets:
+   - https://github.com/tjcruz-dei/ICS_PCAPS/releases/tag/MODBUSTCP%231 (Modbus/TCP)
+ii) Install tools:
+   - Wireshark – network traffic analysis  
+   - Draw.io – Purdue model network diagram  
+   - Notepad/Word – notes & summary
+
+Step 1: Load ICS traffic
+i) Open Wireshark 
+ii) Load sample PCAP files (Modbus/TCP traffic)  
+iii) Filter traffic by protocol:
+   - Modbus: `modbus`  
+   - TCP: `tcp`  
+iv) Note IP addresses, device types, ports for each device
+   - Example: 192.168.1.10 → PLC  
+   - 192.168.1.20 → HMI  
+   - 192.168.1.30 → Historian
+   
+Step 2: Identify Assets
+i) Create a table with the following columns:
+   | Device Name | IP Address | Protocol | Device Type | Function | Notes |
+ii) From traffic analysis, populate each row with observed devices:
+   - PLC, HMI, RTU, Engineering Workstation, Historian
+iii) Optional: Highlight any unusual traffic or unknown devices(for anomaly detection later)
+
+Step 3: Map ICS Network
+i) Open Draw.io → blank canvas  
+ii) Use Purdue Model zones:
+   - Level 0–1: Field devices (sensors, actuators)  
+   - Level 2: Control devices (PLC, RTU)  
+   - Level 3: Supervisory (HMI, SCADA)  
+   - Level 4: Enterprise / Historian / Engineering Workstations  
+iii) Place assets in correct zones, connect with network links  
+iv) Label protocols (Modbus, DNP3) and IP addresses  
+v) Highlight any **critical network paths** (remote access, control links)
+
+Step 4: Summary Report
+i) Create a 1-page report named as: 'Project_#1_ICS_Asset_Inventory_Report.pdf' containing:
+   - Brief introduction (purpose of asset inventory & mapping)  
+   - Table of assets (from Step 2)  
+   - Network diagram (from Step 3, export PNG/PDF)  
+   - Observations:
+     - Insecure function codes (Modbus FC06/FC05)  
+     - Any unknown or suspicious devices  
+     - Potential segmentation improvements
